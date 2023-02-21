@@ -1,55 +1,41 @@
 <template>
   <div class="textArea">
-    <textarea
-      class="textArea__input-textArea"
-      ref="textarea"
-      v-model="selection"
-    >
-    </textarea>
-    {{ selection }}
+    <textarea class="textArea__input-textArea" ref="textarea"> </textarea>
+    <iframe class="textArea__input-iframe" ref="editor"></iframe>
+    <button @click="Selected">Bold</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "TextArea",
+  name: 'TextArea',
   data() {
-    return { selection: "" };
+    return { selection: '' };
   },
   methods: {
-    Selected() {
-      let control = this.$refs.textarea;
-      let start = control.selectionStart;
-      let end = control.selectionEnd;
-
-      console.log("Start>", start, "END>", end);
-
-      if (start != end) {
-        let text = control.value;
-        control.value =
-          text.substring(0, start) +
-          "<span class='headerT'>" +
-          text.substring(start, end) +
-          "</span>" +
-          text.substring(end);
-
-        control.focus();
-        let sel = end + 7;
-        control.setSelectionRange(sel, sel);
-      }
-      return false;
-
-      // this.selection = e.target.value
-      //   .substring(e.target.selectionStart, e.target.selectionEnd)
-      //   .toUpperCase();
+    Iframe() {
+      this.$refs.editor.contentDocument.designMode = 'on';
     },
+    Selected() {
+      this.$refs.editor.select();
+      document.execCommand('bold', false, null);
+    },
+  },
+  created: function () {
+    window.addEventListener('load', this.Iframe);
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .textArea__input-textArea {
+  display: none;
+}
+.textArea__input-iframe {
   width: 100%;
+}
+
+.textArea__input-iframe body {
   background: #1e1e1e00;
   border: 0;
   color: #fff;
