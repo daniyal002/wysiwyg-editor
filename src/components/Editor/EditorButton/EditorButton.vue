@@ -29,7 +29,11 @@
         <img :src="buttonIcon.ButtonImageDownload" alt="" />
       </button>
 
-      <button type="button" class="EditorButton__button-copyHtml">
+      <button
+        type="button"
+        class="EditorButton__button-copyHtml"
+        @click="copyHtml"
+      >
         Скопировать-HTML
       </button>
     </div>
@@ -44,16 +48,16 @@
 </template>
 
 <script>
-import TextArea from "../TextArea/TextArea.vue";
-import ImgModal from "./ImgModal/ImgModal.vue";
-import undo from "../../../assets/buttonIcon/undo.svg";
-import redo from "../../../assets/buttonIcon/redo.svg";
-import paragraphText from "../../../assets/buttonIcon/paragraphText.svg";
-import imageDownload from "../../../assets/buttonIcon/imageDownload.svg";
-import headerText from "../../../assets/buttonIcon/headerText.svg";
+import TextArea from '../TextArea/TextArea.vue';
+import ImgModal from './ImgModal/ImgModal.vue';
+import undo from '../../../assets/buttonIcon/undo.svg';
+import redo from '../../../assets/buttonIcon/redo.svg';
+import paragraphText from '../../../assets/buttonIcon/paragraphText.svg';
+import imageDownload from '../../../assets/buttonIcon/imageDownload.svg';
+import headerText from '../../../assets/buttonIcon/headerText.svg';
 
 export default {
-  name: "EditorButton",
+  name: 'EditorButton',
   components: { ImgModal, TextArea },
   props: {
     editorObject: {
@@ -70,7 +74,10 @@ export default {
         ButtonHeaderText: headerText,
       },
       modalActive: false,
-      url: "",
+      url: '',
+      refEd: {
+        type: Object,
+      },
     };
   },
 
@@ -79,8 +86,8 @@ export default {
       const selection = window.getSelection();
       const range = selection.getRangeAt(0);
 
-      const span = document.createElement("span");
-      span.style.fontSize = "31px";
+      const span = document.createElement('span');
+      span.style.fontSize = '31px';
 
       range.surroundContents(span);
     },
@@ -88,27 +95,36 @@ export default {
       const selection = window.getSelection();
       const range = selection.getRangeAt(0);
 
-      const span = document.createElement("span");
-      span.style.fontSize = "14px";
+      const span = document.createElement('span');
+      span.style.fontSize = '14px';
 
       range.surroundContents(span);
     },
     pasteImage(data) {
       const editor = this.$refs.textarea.$el.children[0];
-      console.log(editor);
       const selection = window.getSelection();
       const range = document.createRange();
       range.selectNodeContents(editor);
-      //   selection.removeAllRanges();
+      range.collapse(false);
+      selection.removeAllRanges();
       selection.addRange(range);
 
-      const img = document.createElement("img");
+      const img = document.createElement('img');
       img.src = data.url;
-      img.style.width = "300px";
-      img.style.display = "block";
+      img.style.width = '300px';
+      img.style.display = 'block';
 
       range.surroundContents(img);
-      //   this.modalActive = false;
+      this.modalActive = false;
+    },
+    copyHtml() {
+      const el = this.$refs.textarea.$el;
+      const tempElement = document.createElement('textarea');
+      tempElement.value = el.innerHTML;
+      document.body.appendChild(tempElement);
+      tempElement.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempElement);
     },
     openModal() {
       this.modalActive = true;

@@ -22,9 +22,9 @@
 
 <script>
 export default {
-  name: "TextArea",
+  name: 'TextArea',
   data() {
-    return { content: "" };
+    return { content: '' };
   },
   methods: {},
 };
