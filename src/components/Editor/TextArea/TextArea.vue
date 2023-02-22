@@ -1,47 +1,44 @@
 <template>
   <div class="textArea">
-    <textarea class="textArea__input-textArea" ref="textarea"> </textarea>
-    <iframe class="textArea__input-iframe" ref="editor"></iframe>
-    <button @click="Selected">Bold</button>
+    <div class="textArea__div" contenteditable="true" ref="editor">
+      <p class="defaultTextP">
+        Таким образом консультация с широким активом представляет собой
+        интересный эксперимент проверки позиций, занимаемых участниками в
+        отношении поставленных задач. С другой стороны постоянное
+        информационно-пропагандистское обеспечение нашей деятельности
+        представляет собой интересный эксперимент проверки форм развития.
+        Идейные соображения высшего порядка, а также укрепление и развитие
+        структуры влечет за собой процесс внедрения и модернизации
+        соответствующий условий активизации. Задача организации, в особенности
+        же реализация намеченных плановых заданий играет важную роль в
+        формировании дальнейших направлений развития. Повседневная практика
+        показывает, что постоянное информационно-пропагандистское обеспечение
+        нашей деятельности играет важную роль в формировании существенных
+        финансовых и административных условий.
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'TextArea',
+  name: "TextArea",
   data() {
-    return { selection: '' };
+    return { content: "" };
   },
-  methods: {
-    Iframe() {
-      this.$refs.editor.contentDocument.designMode = 'on';
-    },
-    Selected() {
-      this.$refs.editor.select();
-      document.execCommand('bold', false, null);
-    },
-  },
-  created: function () {
-    window.addEventListener('load', this.Iframe);
-  },
+  methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
-.textArea__input-textArea {
-  display: none;
+.textArea {
+  margin-top: 38px;
 }
-.textArea__input-iframe {
+.textArea__div {
   width: 100%;
-}
-
-.textArea__input-iframe body {
-  background: #1e1e1e00;
-  border: 0;
+  background-color: #1e1e1e;
+  width: 100%;
   color: #fff;
-}
-
-.headerT {
-  font-size: 35px;
+  // border: 1px solid white;
 }
 </style>
