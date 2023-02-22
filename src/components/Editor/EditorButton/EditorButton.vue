@@ -39,7 +39,8 @@
     </div>
 
     <ImgModal
-      :isActive="modalActive"
+      v-if="modalActive"
+      :key="modalActive"
       @custom-event="pasteImage"
       @cancelModal="cancelModal"
     />
@@ -56,6 +57,14 @@ import paragraphText from '../../../assets/buttonIcon/paragraphText.svg';
 import imageDownload from '../../../assets/buttonIcon/imageDownload.svg';
 import headerText from '../../../assets/buttonIcon/headerText.svg';
 
+const icons = {
+  ButtonUndo: undo,
+  ButtonRedo: redo,
+  ButtonParagraphText: paragraphText,
+  ButtonImageDownload: imageDownload,
+  ButtonHeaderText: headerText,
+};
+
 export default {
   name: 'EditorButton',
   components: { ImgModal, TextArea },
@@ -66,42 +75,29 @@ export default {
   },
   data() {
     return {
-      buttonIcon: {
-        ButtonUndo: undo,
-        ButtonRedo: redo,
-        ButtonParagraphText: paragraphText,
-        ButtonImageDownload: imageDownload,
-        ButtonHeaderText: headerText,
-      },
+      buttonIcon: icons,
       modalActive: false,
       url: '',
-      refEd: {
-        type: Object,
-      },
     };
   },
 
   methods: {
-    handleFS31() {
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
+    handleFS(size) {
+      const range = window.getSelection().getRangeAt(0);
 
       const span = document.createElement('span');
-      span.style.fontSize = '31px';
+      span.style.fontSize = size;
 
       range.surroundContents(span);
+    },
+    handleFS31() {
+      this.handleFS('34px');
     },
     handleFS14() {
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-
-      const span = document.createElement('span');
-      span.style.fontSize = '14px';
-
-      range.surroundContents(span);
+      this.handleFS('14px');
     },
     pasteImage(data) {
-      const editor = this.$refs.textarea.$el.children[0];
+      const editor = this.$refs.textarea.$refs.editor;
       const selection = window.getSelection();
       const range = document.createRange();
       range.selectNodeContents(editor);
@@ -110,7 +106,7 @@ export default {
       selection.addRange(range);
 
       const img = document.createElement('img');
-      img.src = data.url;
+      img.src = `${data.url}`;
       img.style.width = '300px';
       img.style.display = 'block';
 
@@ -119,12 +115,7 @@ export default {
     },
     copyHtml() {
       const el = this.$refs.textarea.$el;
-      const tempElement = document.createElement('textarea');
-      tempElement.value = el.innerHTML;
-      document.body.appendChild(tempElement);
-      tempElement.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempElement);
+      navigator.clipboard.writeText(el.innerHTML);
     },
     openModal() {
       this.modalActive = true;

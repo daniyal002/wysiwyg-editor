@@ -5,16 +5,12 @@
 </template>
 
 <script>
-import EditorButton from "./EditorButton/EditorButton.vue";
+import EditorButton from './EditorButton/EditorButton.vue';
 export default {
-  name: "EditorWYSIWYG",
+  name: 'EditorWYSIWYG',
   components: {
     EditorButton,
   },
-  data() {
-    return {};
-  },
-  methods: {},
 };
 </script>
 

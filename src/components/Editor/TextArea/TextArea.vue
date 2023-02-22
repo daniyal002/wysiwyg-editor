@@ -1,7 +1,7 @@
 <template>
   <div class="textArea">
     <div class="textArea__div" contenteditable="true" ref="editor">
-      <p class="defaultTextP">
+      <p>
         Таким образом консультация с широким активом представляет собой
         интересный эксперимент проверки позиций, занимаемых участниками в
         отношении поставленных задач. С другой стороны постоянное
@@ -23,10 +23,6 @@
 <script>
 export default {
   name: 'TextArea',
-  data() {
-    return { content: '' };
-  },
-  methods: {},
 };
 </script>
 
@@ -37,8 +33,6 @@ export default {
 .textArea__div {
   width: 100%;
   background-color: #1e1e1e;
-  width: 100%;
   color: #fff;
-  // border: 1px solid white;
 }
 </style>

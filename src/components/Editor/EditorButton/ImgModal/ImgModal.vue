@@ -1,5 +1,5 @@
 <template>
-  <div class="imgModal" v-if="isActive">
+  <div class="imgModal">
     <div class="imgModalContent">
       <div class="imgDownloadIsUrl">
         <label>Вставьте Url: </label>
@@ -23,24 +23,19 @@
 
 <script>
 export default {
-  name: "ImgModal",
-  props: {
-    isActive: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  name: 'ImgModal',
+
   data() {
     return {
-      url: "",
+      url: '',
     };
   },
   methods: {
     cancelModal() {
-      this.$emit("cancelModal");
+      this.$emit('cancelModal');
     },
     emitDataToParent() {
-      this.$emit("custom-event", { url: this.url });
+      this.$emit('custom-event', { url: this.url });
     },
   },
 };
