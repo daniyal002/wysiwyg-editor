@@ -1,28 +1,30 @@
 <template>
   <div class="textArea">
-    <div class="textArea__div" contenteditable="true" ref="editor">
-      <p>
-        Таким образом консультация с широким активом представляет собой
-        интересный эксперимент проверки позиций, занимаемых участниками в
-        отношении поставленных задач. С другой стороны постоянное
-        информационно-пропагандистское обеспечение нашей деятельности
-        представляет собой интересный эксперимент проверки форм развития.
-        Идейные соображения высшего порядка, а также укрепление и развитие
-        структуры влечет за собой процесс внедрения и модернизации
-        соответствующий условий активизации. Задача организации, в особенности
-        же реализация намеченных плановых заданий играет важную роль в
-        формировании дальнейших направлений развития. Повседневная практика
-        показывает, что постоянное информационно-пропагандистское обеспечение
-        нашей деятельности играет важную роль в формировании существенных
-        финансовых и административных условий.
-      </p>
-    </div>
+    <div
+      class="textArea__div"
+      contenteditable="true"
+      ref="editor"
+      @input="handleOnInput"
+      :innerHTML="content"
+    ></div>
   </div>
 </template>
 
 <script>
+import monkeys from "../../../assets/img/monkeys.jpg";
 export default {
-  name: 'TextArea',
+  name: "TextArea",
+  props: ["content"],
+  data() {
+    return {
+      monkeys: monkeys,
+    };
+  },
+  methods: {
+    handleOnInput() {
+      this.$emit("onInput");
+    },
+  },
 };
 </script>
 
@@ -31,8 +33,14 @@ export default {
   margin-top: 38px;
 }
 .textArea__div {
+  border: 1px solid #639eff;
+  min-height: 100px;
+  border-radius: 10px;
+  padding: 10px;
   width: 100%;
   background-color: #1e1e1e;
   color: #fff;
+  box-sizing: border-box;
+  font-size: 16px;
 }
 </style>

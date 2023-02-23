@@ -5,10 +5,7 @@
         <label>Вставьте Url: </label>
         <input type="url" class="imgDownloadIsUrl__input-url" v-model="url" />
       </div>
-      <div class="imgDownloadIsFile" v-if="!url">
-        <label>Выберите файл: </label>
-        <input type="file" class="imgDownloadIsFile__input-file" />
-      </div>
+
       <div class="imgButtons">
         <button class="imgButton imgButtons__ok" @click="emitDataToParent">
           Ok
@@ -23,19 +20,19 @@
 
 <script>
 export default {
-  name: 'ImgModal',
+  name: "ImgModal",
 
   data() {
     return {
-      url: '',
+      url: "",
     };
   },
   methods: {
     cancelModal() {
-      this.$emit('cancelModal');
+      this.$emit("cancelModal");
     },
     emitDataToParent() {
-      this.$emit('custom-event', { url: this.url });
+      this.$emit("url", { url: this.url });
     },
   },
 };
@@ -87,34 +84,6 @@ export default {
 .imgDownloadIsUrl__input-url:focus {
   outline: none;
   box-shadow: 0 0 10px #639eff;
-}
-
-.imgDownloadIsFile {
-  display: flex;
-  align-items: center;
-  column-gap: 20px;
-  transition: 0.5s;
-}
-.imgDownloadIsFile__input-file {
-  cursor: pointer;
-  font-size: 14px;
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-  border: 1px solid #639eff;
-  background-color: #639eff;
-  line-height: 22px;
-  padding: 10px 20px;
-  transition: 0.5s;
-}
-
-.imgDownloadIsFile__input-file:hover {
-  color: #639eff;
-  background-color: #fff;
-  border: 1px solid #639eff;
-}
-.imgDownloadIsFile__input-file::-webkit-file-upload-button {
-  display: none;
 }
 
 .imgButtons {

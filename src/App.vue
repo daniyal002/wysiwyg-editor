@@ -23,7 +23,22 @@ body {
 }
 #app {
   max-width: 738px;
-  padding: 77px 117px 0 107px;
+  padding: 77px 117px 107px 107px;
   margin: 0 auto;
+}
+@media (max-width: 660px) {
+  #app {
+    padding: 77px 80px;
+  }
+}
+@media (max-width: 500px) {
+  #app {
+    padding: 77px 50px;
+  }
+}
+@media (max-width: 400px) {
+  #app {
+    padding: 77px 30px;
+  }
 }
 </style>
